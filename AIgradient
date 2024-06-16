@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Animated Gradient</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+        }
+        .gradient-rectangle {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(135deg, #0e226c, #e5e5e5, #0e226c);
+            background-size: 400% 400%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: animateGradient 10s ease infinite;
+        }
+        .gradient-rectangle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        @keyframes animateGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-rectangle" id="gradient-rectangle"></div>
+    <script>
+        const rectangle = document.getElementById('gradient-rectangle');
+        let mouseX = 0.5; // Initial value to start in the middle
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX / window.innerWidth;
+        });
+
+        function updateGradient() {
+            const angle = 135 + (mouseX * 45); // Adjust the range of angle changes for subtle effect
+            rectangle.style.background = `linear-gradient(${angle}deg, #0e226c, #e5e5e5, #0e226c)`;
+            requestAnimationFrame(updateGradient);
+        }
+        
+        updateGradient();
+    </script>
+</body>
+</html>
